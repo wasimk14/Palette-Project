@@ -1,0 +1,83 @@
+body {
+    background: #e9d8c1;
+    font-family: "Inter", sans-serif;
+    padding: 40px;
+    text-align: center;
+    color: #333;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Color grid */
+.colors {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Each color box */
+.color-box {
+    height: 140px;
+    border-radius: 14px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    font-weight: 600;
+    color: cyan;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: transform 0.15s ease;
+}
+
+.color-box:hover {
+    transform: translateY(-4px);
+}
+
+.color-box {
+    position: relative;
+    height: 140px;
+    border-radius: 14px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    font-weight: 600;
+    color: cyan;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: transform 0.15s ease;
+}
+
+.color-box:hover {
+    transform: translateY(-4px);
+}
+
+/* Copy button */
+.copy-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.4);
+    color: cyan;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity .25s ease, transform .2s ease;
+    pointer-events: none;
+}
+
+/* Show on hover */
+.color-box:hover .copy-btn {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}

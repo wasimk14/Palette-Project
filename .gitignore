@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual environment
+venv/
+.env/
+
+# Flask
+instance/
+uploads/*
+
+# PyCharm / IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

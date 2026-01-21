@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_index.css') }}">
+    <title>Palette Analyzer</title>
+</head>
+
+<body>
+
+<div class="upload-container">
+    <h1>Upload an Image</h1>
+
+    <form id="uploadForm" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+        <div id="drop-area">
+            <p>Drag & Drop your image here</p>
+            <span>or click to browse</span>
+            <input type="file" id="fileElem" name="image" accept="image/*">
+        </div>
+    </form>
+</div>
+<div class="random-colors">
+    {% for name, hex in sample_colors %}
+        <div class="color-box" style="background: {{ hex }}">
+            <div class="label">
+                {{ name }}<br>{{ hex }}
+            </div>
+            <button class="copy-btn" data-hex="{{ hex }}">
+                Copy
+            </button>
+        </div>
+    {% endfor %}
+        <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="text-center mt-4" style="display: none;">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+        <p class="mt-2">Analyzing... please wait</p>
+    </div>
+</div>
+
+<script>
+const dropArea = document.getElementById("drop-area");
+const fileInput = document.getElementById("fileElem");
+const form = document.getElementById("uploadForm");
+const spinner = document.getElementById("loadingSpinner");
+
+// Show spinner + submit
+function startAnalysis() {
+    dropArea.style.opacity = "0";
+    dropArea.style.pointerEvents = "none";
+
+    setTimeout(() => {
+        dropArea.style.display = "none";
+        spinner.style.display = "block";
+        form.submit();
+    }, 150);
+}
+
+// Click to browse
+dropArea.addEventListener("click", () => fileInput.click());
+
+// Drag highlight
+dropArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropArea.classList.add("highlight");
+});
+
+dropArea.addEventListener("dragleave", () => {
+    dropArea.classList.remove("highlight");
+});
+
+// Drop file
+dropArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropArea.classList.remove("highlight");
+
+    const file = e.dataTransfer.files[0];
+    fileInput.files = e.dataTransfer.files;
+
+    startAnalysis();
+});
+
+// File selected via click
+fileInput.addEventListener("change", () => {
+    startAnalysis();
+});
+</script>
+
+<script>
+document.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const hex = btn.getAttribute("data-hex");
+        navigator.clipboard.writeText(hex);
+
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = "Copy", 1200);
+    });
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Palette Analyzer – Results</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
+</head>
+<body>
+
+    <h1>Top 10 HEX Code & Color Names</h1>
+
+    <div class="colors">
+    {% for hex, name in hex_codes %}
+        <div class="color-box" style="background: {{ hex }}">
+            <div class="label">
+                {{ name }}<br>{{ hex }}
+            </div>
+
+            <button class="copy-btn" data-hex="{{ hex }}">
+                Copy
+            </button>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+document.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const hex = btn.getAttribute("data-hex");
+        navigator.clipboard.writeText(hex);
+
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = "Copy", 1200);
+    });
+});
+</script>
+
+</body>
+</html>
